@@ -5,23 +5,48 @@ import 'package:flutter/material.dart';
 void main() => runApp(XylophoneApp());
 
 class XylophoneApp extends StatelessWidget {
-  
+
+  // final player = AudioPlayer();
+  Future<void> playSound(int x)
+  async {
+    final player = AudioPlayer();
+    await player.setSource(AssetSource('note$x.wav'));
+    player.resume();
+  }
+
+  // var colorList = ['red', 'orange', 'yellow', 'lightGreen', 'green', 'indigo', 'purple'];
+
+  Expanded keyPlayer({required Color colour, required int soundNumber})
+  {
+    return Expanded(
+      child: TextButton(
+        child: Container(
+          color: colour,
+
+      ),
+      onPressed: () {
+        playSound(soundNumber);
+    },
+    ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: SafeArea(
-          child: Center(
-            child: TextButton(
-              onPressed: () async {
-                final player = AudioPlayer();
-                await player.setSource(AssetSource('note6.wav'));
-                player.resume();
-                await player.setPlaybackRate(0.9);
-                // await player.play(DeviceFileSource('note1.wav'));
-              },
-              child: Image.asset('images/Krishna.jpeg'),
-            ),
+          child: Column(
+            children: [
+             keyPlayer(colour: Colors.red, soundNumber: 1),
+             keyPlayer(colour: Colors.orange, soundNumber: 2),
+             keyPlayer(colour: Colors.yellow, soundNumber: 3),
+             keyPlayer(colour: Colors.lightGreen, soundNumber: 4),
+             keyPlayer(colour: Colors.green, soundNumber: 5),
+             keyPlayer(colour: Colors.blue, soundNumber: 6),
+             keyPlayer(colour: Colors.purple, soundNumber: 7),
+          ],
           )
         ),
       ),
